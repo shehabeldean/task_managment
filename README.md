@@ -18,11 +18,15 @@ Step-by-step guide on setting up project:
    ```bash
    composer install
 
-2. Generate an application key:
+2. Copy .env.example to .env:
+   ```bash
+   cp .env.example .env
+
+3. Generate an application key:
    ```bash
    php artisan key:generate
 
-3. Set up  database in .env:
+4. Set up  database in .env:
    ```bash
     DB_CONNECTION=mysql
     DB_HOST=127.0.0.1
@@ -31,7 +35,7 @@ Step-by-step guide on setting up project:
     DB_USERNAME=homestead
     DB_PASSWORD=secret
 
-4. If you want to run one command to skip all next steps. You can run this one 
+5. If you want to run one command to skip all next steps. You can run this one 
    ```bash
    php artisan app:start
 
@@ -39,19 +43,19 @@ Step-by-step guide on setting up project:
 if you didn't use this command you can skip it and run the following commands:
 
 
-5. Run migrations and seed the database:
+6. Run migrations and seed the database:
    ```bash
    php artisan migrate --seed
 
-6. To queue work (For background jobs)
+7. To queue work (For background jobs)
    ```bash
    php artisan queue:work 
 
-7. Serve project 
+8. Serve project 
    ```bash
    php artisan serve
 
-8. To run tests
+9. To run tests
    ```bash
    php artisan test
 
