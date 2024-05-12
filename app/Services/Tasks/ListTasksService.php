@@ -11,7 +11,7 @@ class ListTasksService extends ListService
     {
         $this->relations = [
             'assignedBy',
-            'assignedBy',
+            'assignedTo',
         ];
     }
     public function getAll()

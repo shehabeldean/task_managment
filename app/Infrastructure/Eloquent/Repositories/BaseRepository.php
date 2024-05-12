@@ -6,7 +6,7 @@ use App\Infrastructure\Contracts\BaseRepositoryInterface;
 use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Model;
 
-abstract class BaseRepository implements BaseRepositoryInterface
+class BaseRepository implements BaseRepositoryInterface
 {
     public function __construct(protected Model $model)
     {
@@ -34,6 +34,12 @@ abstract class BaseRepository implements BaseRepositoryInterface
             return $query->get();
     }
 
-    protected abstract function applySearch($query, $searchTerm);
-    protected abstract function applyFilter($query, $filters);
+    protected function applySearch($query, $searchTerm)
+    {
+        return $query;
+    }
+    protected function applyFilter($query, $filters)
+    {
+        return $query;
+    }
 }

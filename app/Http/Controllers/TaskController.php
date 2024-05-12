@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Enums\UserRole;
+use App\Http\Requests\StoreTaskRequest;
+use App\Services\Tasks\CreateTaskService;
 use App\Services\Tasks\ListTasksService;
 use App\Services\Users\ListUsersService;
 use Illuminate\Http\Request;
@@ -22,5 +24,14 @@ class TaskController extends Controller
         $admins = $listUsersService->getAll(UserRole::ADMIN);
         $users = $listUsersService->getAll();
         return view('tasks.create', compact('admins', 'users'));
+    }
+
+    public function store(StoreTaskRequest $request, CreateTaskService $createTaskService)
+    {
+        $createTaskService->create(
+            $request->validated()
+        );
+
+        return redirect()->route('tasks.index');
     }
 }

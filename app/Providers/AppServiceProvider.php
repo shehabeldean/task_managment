@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Observers\TaskObserver;
 use Illuminate\Support\ServiceProvider;
+use App\Infrastructure\Eloquent\Models\Task;
 use App\Infrastructure\Contracts\TaskRepositoryInterface;
 use App\Infrastructure\Contracts\UserRepositoryInterface;
 use App\Infrastructure\Eloquent\Repositories\TaskRepository;
@@ -27,6 +29,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Task::observe(TaskObserver::class);
     }
 }

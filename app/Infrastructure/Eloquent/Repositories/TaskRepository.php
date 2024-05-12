@@ -12,14 +12,4 @@ class TaskRepository extends BaseRepository implements TaskRepositoryInterface
     {
         parent::__construct($task);
     }
-
-    public function applySearch($query, $searchTerm)
-    {
-        //
-    }
-
-    public function applyFilter($query, $filters)
-    {
-        //
-    }
 }

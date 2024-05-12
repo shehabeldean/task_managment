@@ -3,8 +3,8 @@
 @section('content')
 <div class="container">
     <h2>Create New Task</h2>
-    <form method="POST" action="{{ route('tasks.create') }}">
-        @csrf  {{-- CSRF token protection --}}
+    <form method="POST" action="{{ route('tasks.store') }}">
+        @csrf
         <div class="mb-3">
             <label for="title" class="form-label">Title</label>
             <input type="text" class="form-control" id="title" name="title" required>
@@ -14,14 +14,12 @@
             <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
         </div>
         <div class="mb-3">
-            <label for="searchAdmin" class="form-label">Search Admin</label>
-            <input type="text" id="searchAdmin" class="form-control">
-            <select class="form-select mt-2" id="assignedBy" name="assigned_by_id"></select>
+            <label for="assignedBy" class="form-label">Admin Name</label>
+            <select class="form-control select2" id="assignedBy" name="assigned_by_id" required></select>
         </div>
         <div class="mb-3">
-            <label for="searchUser" class="form-label">Search User</label>
-            <input type="text" id="searchUser" class="form-control">
-            <select class="form-select mt-2" id="assignedTo" name="assigned_to_id"></select>
+            <label for="assignedTo" class="form-label">Assigned User</label>
+            <select class="form-control select2" id="assignedTo" name="assigned_to_id" required></select>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
@@ -34,37 +32,61 @@
 
 <script>
     $(document).ready(function() {
-        $('#searchAdmin').keyup(function() {
-            let query = $(this).val();
-            $.ajax({
-                url: `/search-admins?searchTerm=${query}`,
-                type: 'GET',
-                success: function(data) {
-                    let dropdown = $('#assignedBy');
-                    dropdown.empty();
-                    $.each(data.data, function(key, admin) {
-                        dropdown.append($('<option></option>').attr('value', admin.id).text(admin.name));
-                    });
-                }
-            });
+        $('#assignedBy').select2({
+            width: '100%',
+            ajax: {
+                url: '/search-admins',
+                dataType: 'json',
+                delay: 250, 
+                data: function (params) {
+                    return {
+                        searchTerm: params.term // search term
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data.data.map(function (item) {
+                            return {
+                                id: item.id,
+                                text: item.name
+                            };
+                        })
+                    };
+                },
+                cache: true
+            },
+            placeholder: 'Select an option',
+            minimumInputLength: 0,
         });
 
-        $('#searchUser').keyup(function() {
-            let query = $(this).val();
-            $.ajax({
-                url: `/search-users?searchTerm=${query}`,
-                type: 'GET',
-                success: function(data) {
-                    let dropdown = $('#assignedTo');
-                    dropdown.empty();
-                    $.each(data.data, function(key, user) {
-                        dropdown.append($('<option></option>').attr('value', user.id).text(user.name));
-                    });
-                }
-            });
+        $('#assignedTo').select2({
+            width: '100%',
+            ajax: {
+                url: '/search-users',
+                dataType: 'json',
+                delay: 250, 
+                data: function (params) {
+                    return {
+                        searchTerm: params.term // search term
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data.data.map(function (item) {
+                            return {
+                                id: item.id,
+                                text: item.name
+                            };
+                        })
+                    };
+                },
+                cache: true
+            },
+            placeholder: 'Select an option',
+            minimumInputLength: 0,
         });
+
     });
 </script>
-
 
 @endsection
