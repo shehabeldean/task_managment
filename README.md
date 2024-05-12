@@ -22,11 +22,8 @@ Step-by-step guide on setting up project:
    ```bash
    cp .env.example .env
 
-3. Generate an application key:
-   ```bash
-   php artisan key:generate
 
-4. Set up  database in .env:
+3. Set up  database in .env:
    ```bash
     DB_CONNECTION=mysql
     DB_HOST=127.0.0.1
@@ -34,6 +31,10 @@ Step-by-step guide on setting up project:
     DB_DATABASE=homestead
     DB_USERNAME=homestead
     DB_PASSWORD=secret
+   
+4. Generate an application key:
+   ```bash
+   php artisan key:generate
 
 5. If you want to run one command to skip all next steps. You can run this one 
    ```bash
